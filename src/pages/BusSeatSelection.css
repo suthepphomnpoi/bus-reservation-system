@@ -1,0 +1,86 @@
+/* ขนาดปุ่ม: กดง่ายบนมือถือด้วย clamp */
+:root {
+  --seat-size: clamp(40px, 8vw, 56px);
+}
+
+/* กริดที่นั่ง */
+.seat-grid {
+  display: grid;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.with-aisle {
+  /* 2 ที่นั่ง + ทางเดิน + 2 ที่นั่ง */
+  grid-template-columns: var(--seat-size) var(--seat-size) var(--seat-size) var(
+      --seat-size
+    ) var(--seat-size);
+}
+
+/* ปุ่มที่นั่ง */
+.seat-btn {
+  position: relative;
+  width: var(--seat-size);
+  height: var(--seat-size);
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border-width: 2px;
+}
+.seat-number {
+  line-height: 1;
+}
+
+/* ทางเดิน */
+.aisle {
+  width: var(--seat-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aisle-label {
+  font-size: 0.7rem;
+  color: #888;
+}
+
+/* ป้ายมุม-เลือกแล้ว */
+.badge-tick {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  background: #198754; /* success */
+  color: #fff;
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 0.4rem;
+}
+
+/* Legend สี */
+.legend-box {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 0.25rem;
+  border: 2px solid #6c757d;
+}
+.legend-box.available {
+  background: transparent;
+}
+.legend-box.selected {
+  background: #198754;
+  border-color: #198754;
+}
+.legend-box.booked {
+  background: #dc3545;
+  border-color: #dc3545;
+}
+
+/* sticky summary ในจอใหญ่ */
+@media (min-width: 992px) {
+  .sticky-lg {
+    position: sticky;
+    top: 1rem;
+  }
+}
