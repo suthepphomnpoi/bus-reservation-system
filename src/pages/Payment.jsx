@@ -1,11 +1,11 @@
 import Navbar from "../components/Navbar";
 
-export default function Home() {
+export default function Payment() {
   return (
     <>
       <Navbar />
       <div className="container">
-        <h1>Home</h1>
+        <h1>payment</h1>
       </div>
     </>
   );
