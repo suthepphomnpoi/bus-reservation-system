@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
 import SearchForm from "../components/Home/SearchForm";
 import SearchResults from "../components/Home/SearchResults";
+import Footer from "../components/Footer";
 
 /** ===== Mock data (สั้น กระชับ) ===== */
 const PLACES = [
@@ -152,6 +153,7 @@ export default function Home() {
           <SearchResults submitted={submitted} results={results} />
         </div>
       </div>
+      <Footer />
     </>
   );
 }
