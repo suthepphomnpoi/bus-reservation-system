@@ -7,9 +7,6 @@ export default function Legend({ pricePerSeat }) {
       <span className="legend-box selected" />
       <span className="small">เลือกอยู่</span>
 
-      <span className="legend-box priority" />
-      <span className="small">ที่นั่งพิเศษ</span>
-
       <span className="legend-box booked" />
       <span className="small">ถูกจองแล้ว</span>
 

@@ -5,10 +5,11 @@ import Legend from "../components/BusSeatSelection/Legend";
 import "./BusSeatSelection.css";
 
 export default function BusSeatSelection() {
-  const pricePerSeat = 30; // ราคาโดยประมาณรถเมล์ปรับอากาศ/รถร่วม ปรับตามจริงได้
+  const pricePerSeat = 30; // ตัวอย่างค่าโดยสาร (ปรับตามจริงได้)
 
-  // === Layout (มี AISLE คั่นกลาง) === — รถเมย์ 2+2
-  const lowerSeats = useMemo(
+  // === ผังที่นั่งรถเมย์ไทย (2+2 + ทางเดินกลาง) — ชั้นเดียว ===
+  // ใช้รหัส L01..L32 เฉยๆ เพื่อความเรียบง่าย
+  const seats = useMemo(
     () => [
       "L01",
       "L02",
@@ -54,57 +55,14 @@ export default function BusSeatSelection() {
     []
   );
 
-  // ถ้ารถเมย์ชั้นเดียว ใช้ upper ว่างไว้ก็ได้ หรือจะซ่อนแท็บฝั่ง UI ภายหลัง
-  const upperSeats = useMemo(
-    () => [
-      "U01",
-      "U02",
-      "AISLE",
-      "U03",
-      "U04",
-      "U05",
-      "U06",
-      "AISLE",
-      "U07",
-      "U08",
-      "U09",
-      "U10",
-      "AISLE",
-      "U11",
-      "U12",
-      "U13",
-      "U14",
-      "AISLE",
-      "U15",
-      "U16",
-      "U17",
-      "U18",
-      "AISLE",
-      "U19",
-      "U20",
-      "U21",
-      "U22",
-      "AISLE",
-      "U23",
-      "U24",
-    ],
-    []
-  );
-
-  // จองแล้ว / ที่นั่งพิเศษ (ใช้ prop เดิม 'femaleOnly' เพื่อไม่แตก API)
+  // ตัวอย่าง: ที่นั่งถูกจองแล้ว (mock)
   const booked = useMemo(
-    () =>
-      new Set(["L06", "L07", "L10", "L13", "L14", "L21", "U05", "U11", "U12"]),
-    []
-  );
-  const femaleOnly = useMemo(
-    // = priority seats
-    () => new Set(["L01", "L02", "L03", "U01", "U02"]),
+    () => new Set(["L06", "L07", "L10", "L13", "L14", "L21"]),
     []
   );
 
+  // state: ที่นั่งที่เลือก
   const [selected, setSelected] = useState(new Set());
-
   const toggleSeat = (code) => {
     setSelected((prev) => {
       const next = new Set(prev);
@@ -113,7 +71,6 @@ export default function BusSeatSelection() {
       return next;
     });
   };
-
   const clearAll = () => setSelected(new Set());
 
   const selectedList = useMemo(() => Array.from(selected).sort(), [selected]);
@@ -122,20 +79,23 @@ export default function BusSeatSelection() {
   return (
     <>
       <Navbar />
+
       <main className="container my-4">
         <div className="row g-4">
-          {/* LEFT */}
+          {/* LEFT: แผนผังที่นั่ง */}
           <div className="col-12 col-lg-8">
-            {/* Trip summary */}
+            {/* หัวข้อ/ข้อมูลเส้นทางรถเมย์ */}
             <div className="card shadow-sm mb-3">
               <div className="card-body d-flex flex-wrap align-items-center justify-content-between">
                 <div>
-                  <div className="small text-secondary">รถเมล์สาย</div>
+                  <div className="small text-secondary">
+                    รถเมย์ไทย • สายตัวอย่าง
+                  </div>
                   <div className="fw-semibold">
                     สาย 8 (สะพานพุทธ ↔ แฮปปี้แลนด์)
                   </div>
                   <div className="text-secondary small">
-                    ออก 18:00 • ถึงประมาณ 19:10 • ไม่รับประกันเวลา (จราจร)
+                    เวลาโดยประมาณ ขึ้นกับสภาพการจราจร
                   </div>
                 </div>
                 <div className="text-end">
@@ -147,79 +107,31 @@ export default function BusSeatSelection() {
               </div>
             </div>
 
-            {/* Legend */}
+            {/* คำอธิบายสถานะ */}
             <Legend pricePerSeat={pricePerSeat} />
 
-            {/* Deck Tabs (ถ้ารถชั้นเดียวจะใช้เฉพาะ Lower ได้) */}
-            <ul className="nav nav-tabs" id="deckTabs" role="tablist">
-              <li className="nav-item" role="presentation">
-                <button
-                  className="nav-link active"
-                  id="lower-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#lower"
-                  type="button"
-                  role="tab"
-                >
-                  ชั้นล่าง (รถเมย์)
-                </button>
-              </li>
-              <li className="nav-item" role="presentation">
-                <button
-                  className="nav-link"
-                  id="upper-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#upper"
-                  type="button"
-                  role="tab"
-                >
-                  ชั้นบน (ถ้ามี)
-                </button>
-              </li>
-            </ul>
-
-            <div className="tab-content bg-white border border-top-0 p-3 rounded-bottom shadow-sm">
-              {/* Lower */}
-              <div
-                className="tab-pane fade show active"
-                id="lower"
-                role="tabpanel"
-              >
-                <SeatGrid
-                  seats={lowerSeats}
-                  booked={booked}
-                  femaleOnly={femaleOnly} // ใช้เป็น "ที่นั่งพิเศษ"
-                  selected={selected}
-                  onToggle={toggleSeat}
-                />
-                <div className="text-center text-secondary small mt-2">
-                  แผนผังที่นั่ง — ชั้นล่าง
-                </div>
-              </div>
-              {/* Upper */}
-              <div className="tab-pane fade" id="upper" role="tabpanel">
-                <SeatGrid
-                  seats={upperSeats}
-                  booked={booked}
-                  femaleOnly={femaleOnly}
-                  selected={selected}
-                  onToggle={toggleSeat}
-                />
-                <div className="text-center text-secondary small mt-2">
-                  แผนผังที่นั่ง — ชั้นบน
-                </div>
+            {/* แผนผังที่นั่ง (ชั้นเดียว) */}
+            <div className="bg-white border mt-4 rounded shadow-sm">
+              <SeatGrid
+                seats={seats}
+                booked={booked}
+                selected={selected}
+                onToggle={toggleSeat}
+              />
+              <div className="text-center text-secondary small mt-2">
+                แผนผังที่นั่ง — รถเมย์ชั้นเดียว
               </div>
             </div>
           </div>
 
-          {/* RIGHT */}
+          {/* RIGHT: สรุปรายการ */}
           <div className="col-12 col-lg-4">
             <div className="card shadow-sm sticky-lg">
               <div className="card-header bg-white d-flex justify-content-between align-items-center">
                 <div>
                   <div className="fw-semibold">สรุปการเลือกที่นั่ง</div>
                   <div className="small text-secondary">
-                    กดเลือกบนแผนผังด้านซ้ายได้เลย
+                    กดเลือกบนแผนผังด้านซ้าย
                   </div>
                 </div>
                 <button

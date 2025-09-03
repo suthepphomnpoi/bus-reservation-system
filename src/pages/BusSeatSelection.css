@@ -1,4 +1,4 @@
-/* ขนาดปุ่ม: ปรับตามจออัตโนมัติ (รถเมย์กดง่าย ๆ) */
+/* ขนาดปุ่ม: กดง่ายบนมือถือด้วย clamp */
 :root {
   --seat-size: clamp(40px, 8vw, 56px);
 }
@@ -9,9 +9,8 @@
   gap: 0.5rem;
   justify-content: center;
 }
-
 .with-aisle {
-  /* 2 ที่นั่ง + ทางเดิน + 2 ที่นั่ง = 5 คอลัมน์ */
+  /* 2 ที่นั่ง + ทางเดิน + 2 ที่นั่ง */
   grid-template-columns: var(--seat-size) var(--seat-size) var(--seat-size) var(
       --seat-size
     ) var(--seat-size);
@@ -29,7 +28,6 @@
   font-weight: 700;
   border-width: 2px;
 }
-
 .seat-number {
   line-height: 1;
 }
@@ -44,19 +42,6 @@
 .aisle-label {
   font-size: 0.7rem;
   color: #888;
-}
-
-/* ป้ายมุม-ที่นั่งพิเศษ */
-.badge-priority {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: #0d6efd; /* primary */
-  color: #fff;
-  font-size: 0.65rem;
-  line-height: 1;
-  padding: 2px 5px;
-  border-radius: 0.4rem;
 }
 
 /* ป้ายมุม-เลือกแล้ว */
@@ -86,10 +71,6 @@
 .legend-box.selected {
   background: #198754;
   border-color: #198754;
-}
-.legend-box.priority {
-  background: #0d6efd;
-  border-color: #0d6efd;
 }
 .legend-box.booked {
   background: #dc3545;
