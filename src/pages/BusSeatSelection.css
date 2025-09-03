@@ -1,0 +1,45 @@
+:root {
+  --seat-size: 44px;
+}
+
+/* กริดที่นั่ง (Bootstrap แทบไม่ต้อง custom อะไรเพิ่ม) */
+.seat-grid {
+  display: grid;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.with-aisle {
+  grid-template-columns: var(--seat-size) var(--seat-size) var(--seat-size) var(
+      --seat-size
+    ) var(--seat-size);
+}
+
+/* ช่องว่างทางเดิน */
+.aisle {
+  width: var(--seat-size);
+}
+
+.seat-btn {
+  width: var(--seat-size);
+  height: var(--seat-size);
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+/* ทำให้เห็นสถานะ "ผู้หญิง" เบาๆ */
+.seat-female {
+  border-style: dashed !important;
+  opacity: 0.9;
+}
+
+/* sticky summary ในจอใหญ่ */
+@media (min-width: 992px) {
+  .sticky-lg {
+    position: sticky;
+    top: 1rem;
+  }
+}
