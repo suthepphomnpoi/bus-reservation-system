@@ -6,8 +6,8 @@ export default function Payment() {
     <>
       <Navbar />
       <div className="container mt-4">
-        <div className="row">
-          <div className="col-8">
+        <div className="row g-4 flex-column-reverse flex-lg-row">
+          <div className="col-12 col-lg-8">
             <div className="card mb-4">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-2">
@@ -27,7 +27,7 @@ export default function Payment() {
             </div>
             <div className="row mb-4">
               {/* Paypal */}
-              <div className="col-md-4 mb-3">
+              <div className="col-12 col-md-4 mb-3">
                 <div className="card h-100">
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
@@ -38,13 +38,13 @@ export default function Payment() {
                       <input className="form-check-input" type="radio" name="paymentMethod" id="paypal1" />
                     </div>
                     <div style={{fontSize: '0.95rem'}}>
-                      PayPal is a trusted online payment platform that allows individuals and businesses to securely send and receive money electronically.
+                     
                     </div>
                   </div>
                 </div>
               </div>
               {/* Mobile Banking */}
-              <div className="col-md-4 mb-3">
+              <div className="col-12 col-md-4 mb-3">
                 <div className="card h-100">
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
@@ -55,13 +55,13 @@ export default function Payment() {
                       <input className="form-check-input" type="radio" name="paymentMethod" id="mobilebanking" />
                     </div>
                     <div style={{fontSize: '0.95rem'}}>
-                      Mobile Banking is a convenient way to transfer money and pay bills directly from your bank account using your mobile device.
+                      
                     </div>
                   </div>
                 </div>
               </div>
               {/* Mastercard */}
-              <div className="col-md-4 mb-3">
+              <div className="col-12 col-md-4 mb-3">
                 <div className="card h-100">
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
@@ -72,7 +72,7 @@ export default function Payment() {
                       <input className="form-check-input" type="radio" name="paymentMethod" id="mastercard" />
                     </div>
                     <div style={{fontSize: '0.95rem'}}>
-                      Mastercard enables secure payments worldwide, allowing you to shop and pay easily with your credit or debit card.
+                      
                     </div>
                   </div>
                 </div>
@@ -80,7 +80,7 @@ export default function Payment() {
             </div>
             
           </div>
-          <div className="col-4">
+          <div className="col-12 col-lg-4">
             <div className="card mb-4">
               <div className="card-body">
                 <h5>Order Summary</h5>
