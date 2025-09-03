@@ -11,14 +11,14 @@ export default function SeatGrid({
         if (code === "AISLE") {
           return (
             <div key={`aisle-${idx}`} className="aisle text-center">
-              <span className="aisle-label">AISLE</span>
+              <span className="aisle-label">ทางเดิน</span>
             </div>
           );
         }
 
         const isBooked = booked?.has(code);
         const isSelected = selected?.has(code);
-        const isFemale = femaleOnly?.has(code);
+        const isPriority = femaleOnly?.has(code); // ใช้ prop เดิม แต่แปลความเป็น "ที่นั่งพิเศษ"
 
         let classes = "btn seat-btn btn-outline-secondary";
         if (isBooked) classes = "btn seat-btn btn-danger text-white";
@@ -32,8 +32,8 @@ export default function SeatGrid({
             title={
               isBooked
                 ? "ถูกจองแล้ว"
-                : isFemale
-                ? "โควตาผู้หญิง"
+                : isPriority
+                ? "ที่นั่งพิเศษ (ผู้สูงอายุ/คนพิการ/หญิงมีครรภ์)"
                 : "ที่นั่งว่าง"
             }
             aria-pressed={isSelected}
@@ -42,8 +42,8 @@ export default function SeatGrid({
           >
             <span className="seat-number">{code.replace(/[LU]/, "")}</span>
 
-            {/* ป้ายมุม: ผู้หญิง */}
-            {isFemale && <span className="badge-female">♀</span>}
+            {/* ป้ายมุม: ที่นั่งพิเศษ */}
+            {isPriority && <span className="badge-priority">★</span>}
 
             {/* ป้ายมุม: เลือกแล้ว */}
             {isSelected && <span className="badge-tick">✓</span>}

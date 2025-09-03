@@ -5,9 +5,9 @@ import Legend from "../components/BusSeatSelection/Legend";
 import "./BusSeatSelection.css";
 
 export default function BusSeatSelection() {
-  const pricePerSeat = 600;
+  const pricePerSeat = 30; // ราคาโดยประมาณรถเมล์ปรับอากาศ/รถร่วม ปรับตามจริงได้
 
-  // === Layout (มี AISLE คั่นกลาง) ===
+  // === Layout (มี AISLE คั่นกลาง) === — รถเมย์ 2+2
   const lowerSeats = useMemo(
     () => [
       "L01",
@@ -54,6 +54,7 @@ export default function BusSeatSelection() {
     []
   );
 
+  // ถ้ารถเมย์ชั้นเดียว ใช้ upper ว่างไว้ก็ได้ หรือจะซ่อนแท็บฝั่ง UI ภายหลัง
   const upperSeats = useMemo(
     () => [
       "U01",
@@ -90,15 +91,18 @@ export default function BusSeatSelection() {
     []
   );
 
-  // จองแล้ว / โควตาผู้หญิง (mock)
+  // จองแล้ว / ที่นั่งพิเศษ (ใช้ prop เดิม 'femaleOnly' เพื่อไม่แตก API)
   const booked = useMemo(
     () =>
       new Set(["L06", "L07", "L10", "L13", "L14", "L21", "U05", "U11", "U12"]),
     []
   );
-  const femaleOnly = useMemo(() => new Set(["L03", "U03", "U04"]), []);
+  const femaleOnly = useMemo(
+    // = priority seats
+    () => new Set(["L01", "L02", "L03", "U01", "U02"]),
+    []
+  );
 
-  // state: ที่นั่งที่เลือก
   const [selected, setSelected] = useState(new Set());
 
   const toggleSeat = (code) => {
@@ -118,7 +122,6 @@ export default function BusSeatSelection() {
   return (
     <>
       <Navbar />
-
       <main className="container my-4">
         <div className="row g-4">
           {/* LEFT */}
@@ -127,17 +130,19 @@ export default function BusSeatSelection() {
             <div className="card shadow-sm mb-3">
               <div className="card-body d-flex flex-wrap align-items-center justify-content-between">
                 <div>
-                  <div className="small text-secondary">เที่ยวรถ</div>
+                  <div className="small text-secondary">รถเมล์สาย</div>
                   <div className="fw-semibold">
-                    Satnam Travels • AC Sleeper (2+1)
+                    สาย 8 (สะพานพุทธ ↔ แฮปปี้แลนด์)
                   </div>
                   <div className="text-secondary small">
-                    ออก 18:00 • ถึง 03:00 • 9 ชั่วโมง
+                    ออก 18:00 • ถึงประมาณ 19:10 • ไม่รับประกันเวลา (จราจร)
                   </div>
                 </div>
                 <div className="text-end">
-                  <div className="small text-secondary">ราคาเริ่ม</div>
-                  <div className="fs-5 fw-bold text-warning">₹600</div>
+                  <div className="small text-secondary">ค่าโดยสารเริ่ม</div>
+                  <div className="fs-5 fw-bold text-warning">
+                    ฿{pricePerSeat}
+                  </div>
                 </div>
               </div>
             </div>
@@ -145,7 +150,7 @@ export default function BusSeatSelection() {
             {/* Legend */}
             <Legend pricePerSeat={pricePerSeat} />
 
-            {/* Deck Tabs */}
+            {/* Deck Tabs (ถ้ารถชั้นเดียวจะใช้เฉพาะ Lower ได้) */}
             <ul className="nav nav-tabs" id="deckTabs" role="tablist">
               <li className="nav-item" role="presentation">
                 <button
@@ -156,7 +161,7 @@ export default function BusSeatSelection() {
                   type="button"
                   role="tab"
                 >
-                  Lower Deck
+                  ชั้นล่าง (รถเมย์)
                 </button>
               </li>
               <li className="nav-item" role="presentation">
@@ -168,7 +173,7 @@ export default function BusSeatSelection() {
                   type="button"
                   role="tab"
                 >
-                  Upper Deck
+                  ชั้นบน (ถ้ามี)
                 </button>
               </li>
             </ul>
@@ -183,12 +188,12 @@ export default function BusSeatSelection() {
                 <SeatGrid
                   seats={lowerSeats}
                   booked={booked}
-                  femaleOnly={femaleOnly}
+                  femaleOnly={femaleOnly} // ใช้เป็น "ที่นั่งพิเศษ"
                   selected={selected}
                   onToggle={toggleSeat}
                 />
                 <div className="text-center text-secondary small mt-2">
-                  LOWER DECK
+                  แผนผังที่นั่ง — ชั้นล่าง
                 </div>
               </div>
               {/* Upper */}
@@ -201,7 +206,7 @@ export default function BusSeatSelection() {
                   onToggle={toggleSeat}
                 />
                 <div className="text-center text-secondary small mt-2">
-                  UPPER DECK
+                  แผนผังที่นั่ง — ชั้นบน
                 </div>
               </div>
             </div>
@@ -212,9 +217,9 @@ export default function BusSeatSelection() {
             <div className="card shadow-sm sticky-lg">
               <div className="card-header bg-white d-flex justify-content-between align-items-center">
                 <div>
-                  <div className="fw-semibold">สรุปรายการ</div>
+                  <div className="fw-semibold">สรุปการเลือกที่นั่ง</div>
                   <div className="small text-secondary">
-                    เลือกที่นั่งแล้วชำระเงิน
+                    กดเลือกบนแผนผังด้านซ้ายได้เลย
                   </div>
                 </div>
                 <button
@@ -228,8 +233,8 @@ export default function BusSeatSelection() {
 
               <div className="card-body">
                 <div className="d-flex justify-content-between">
-                  <span className="text-secondary">ผู้ให้บริการ</span>
-                  <span className="fw-semibold">Satnam Travels</span>
+                  <span className="text-secondary">เส้นทาง</span>
+                  <span className="fw-semibold">สะพานพุทธ ↔ แฮปปี้แลนด์</span>
                 </div>
                 <hr />
                 <div className="mb-2 fw-semibold">
@@ -263,12 +268,12 @@ export default function BusSeatSelection() {
 
                 <div className="d-flex justify-content-between align-items-center">
                   <span className="text-secondary">ราคาต่อที่นั่ง</span>
-                  <span>₹{pricePerSeat.toLocaleString()}</span>
+                  <span>฿{pricePerSeat.toLocaleString()}</span>
                 </div>
                 <div className="d-flex justify-content-between align-items-center mt-2">
                   <span className="fw-semibold">รวม</span>
                   <span className="fs-5 fw-bold">
-                    ₹{total.toLocaleString()}
+                    ฿{total.toLocaleString()}
                   </span>
                 </div>
               </div>

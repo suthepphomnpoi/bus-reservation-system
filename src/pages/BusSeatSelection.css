@@ -1,4 +1,4 @@
-/* ขนาดปุ่ม: responsive แบบไม่ต้องคิด */
+/* ขนาดปุ่ม: ปรับตามจออัตโนมัติ (รถเมย์กดง่าย ๆ) */
 :root {
   --seat-size: clamp(40px, 8vw, 56px);
 }
@@ -30,7 +30,6 @@
   border-width: 2px;
 }
 
-/* ตัวเลขที่นั่ง */
 .seat-number {
   line-height: 1;
 }
@@ -47,12 +46,12 @@
   color: #888;
 }
 
-/* ป้ายมุม-ผู้หญิง (แทนเส้นปะ) */
-.badge-female {
+/* ป้ายมุม-ที่นั่งพิเศษ */
+.badge-priority {
   position: absolute;
   top: -6px;
   right: -6px;
-  background: #6f42c1; /* purple */
+  background: #0d6efd; /* primary */
   color: #fff;
   font-size: 0.65rem;
   line-height: 1;
@@ -65,7 +64,7 @@
   position: absolute;
   bottom: -6px;
   right: -6px;
-  background: #198754; /* bootstrap success */
+  background: #198754; /* success */
   color: #fff;
   font-size: 0.7rem;
   line-height: 1;
@@ -73,13 +72,13 @@
   border-radius: 0.4rem;
 }
 
-/* กล่อง legend */
+/* Legend สี */
 .legend-box {
   display: inline-block;
   width: 18px;
   height: 18px;
   border-radius: 0.25rem;
-  border: 2px solid #6c757d; /* outline-secondary */
+  border: 2px solid #6c757d;
 }
 .legend-box.available {
   background: transparent;
@@ -88,9 +87,9 @@
   background: #198754;
   border-color: #198754;
 }
-.legend-box.female {
-  background: #6f42c1;
-  border-color: #6f42c1;
+.legend-box.priority {
+  background: #0d6efd;
+  border-color: #0d6efd;
 }
 .legend-box.booked {
   background: #dc3545;

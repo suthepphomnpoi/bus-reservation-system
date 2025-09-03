@@ -7,14 +7,14 @@ export default function Legend({ pricePerSeat }) {
       <span className="legend-box selected" />
       <span className="small">เลือกอยู่</span>
 
-      <span className="legend-box female" />
-      <span className="small">โควตาผู้หญิง</span>
+      <span className="legend-box priority" />
+      <span className="small">ที่นั่งพิเศษ</span>
 
       <span className="legend-box booked" />
       <span className="small">ถูกจองแล้ว</span>
 
       <span className="ms-auto small text-secondary">
-        ราคาต่อที่นั่ง: <strong>₹{pricePerSeat.toLocaleString()}</strong>
+        ราคาต่อที่นั่ง: <strong>฿{pricePerSeat.toLocaleString()}</strong>
       </span>
     </div>
   );
