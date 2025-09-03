@@ -1,253 +1,157 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
+import SearchForm from "../components/Home/SearchForm";
+import SearchResults from "../components/Home/SearchResults";
 
-const provinces = [
-  "กรุงเทพมหานคร",
-  "กระบี่",
-  "กาญจนบุรี",
-  "กาฬสินธุ์",
-  "กำแพงเพชร",
-  "ขอนแก่น",
-  "จันทบุรี",
-  "ฉะเชิงเทรา",
-  "ชัยนาท",
-  "ชัยภูมิ",
-  "ชุมพร",
-  "เชียงราย",
-  "เชียงใหม่",
-  "ตรัง",
-  "ตราด",
-  "ตาก",
-  "นครนายก",
-  "นครปฐม",
-  "นครพนม",
-  "นครราชสีมา",
-  "นครศรีธรรมราช",
-  "นครสวรรค์",
-  "นราธิวาส",
-  "น่าน",
-  "นนทบุรี",
-  "บึงกาฬ",
-  "บุรีรัมย์",
-  "ประจวบคีรีขันธ์",
-  "ปราจีนบุรี",
-  "ปัตตานี",
-  "พระนครศรีอยุธยา",
-  "พะเยา",
-  "พังงา",
-  "พัทลุง",
-  "พิจิตร",
-  "พิษณุโลก",
-  "เพชรบุรี",
-  "เพชรบูรณ์",
-  "แพร่",
-  "ภูเก็ต",
-  "มหาสารคาม",
-  "มุกดาหาร",
-  "แม่ฮ่องสอน",
-  "ยโสธร",
-  "ยะลา",
-  "ร้อยเอ็ด",
-  "ระนอง",
-  "ระยอง",
-  "ราชบุรี",
-  "ลพบุรี",
-  "ลำปาง",
-  "ลำพูน",
-  "เลย",
-  "ศรีสะเกษ",
-  "สกลนคร",
-  "สงขลา",
-  "สตูล",
-  "สมุทรปราการ",
-  "สมุทรสงคราม",
-  "สมุทรสาคร",
-  "สระแก้ว",
-  "สระบุรี",
-  "สิงห์บุรี",
-  "สุโขทัย",
-  "สุพรรณบุรี",
-  "สุราษฎร์ธานี",
-  "สุรินทร์",
-  "หนองคาย",
-  "หนองบัวลำภู",
-  "อ่างทอง",
-  "อำนาจเจริญ",
-  "อุดรธานี",
-  "อุตรดิตถ์",
-  "อุทัยธานี",
-  "อุบลราชธานี",
+/** ===== Mock data (สั้น กระชับ) ===== */
+const PLACES = [
+  "สะพานพุทธ",
+  "แฮปปี้แลนด์",
+  "สนามหลวง",
+  "สยาม",
+  "หมอชิต",
+  "อนุสาวรีย์ชัยฯ",
+  "บางนา",
+  "สีลม",
+  "สาทร",
+  "พระราม 2",
+  "รังสิต",
+];
+
+const BUS_LINES = [
+  {
+    id: "B001",
+    line: "8",
+    from: "สะพานพุทธ",
+    to: "แฮปปี้แลนด์",
+    via: ["วงเวียนใหญ่", "เสาชิงช้า", "อนุสาวรีย์ชัยฯ", "ลาดพร้าว"],
+    times: ["เช้า (05:00–09:00)", "กลางวัน (09:00–16:00)", "เย็น (16:00–20:00)"],
+    operator: "รถร่วม ขสมก.",
+    seatsLeft: 12,
+  },
+  {
+    id: "B002",
+    line: "40",
+    from: "สนามหลวง",
+    to: "บางนา",
+    via: ["สยาม", "สีลม"],
+    times: ["เช้า (05:00–09:00)", "กลางวัน (09:00–16:00)", "เย็น (16:00–20:00)"],
+    operator: "ขสมก.",
+    seatsLeft: 0, // เต็ม
+  },
+  {
+    id: "B003",
+    line: "73ก",
+    from: "สนามหลวง",
+    to: "หมอชิต",
+    via: ["เสาชิงช้า", "อนุสาวรีย์ชัยฯ"],
+    times: ["เช้า (05:00–09:00)", "กลางวัน (09:00–16:00)"],
+    operator: "ขสมก.",
+    seatsLeft: 7,
+  },
+  {
+    id: "B004",
+    line: "511",
+    from: "พระราม 2",
+    to: "รังสิต",
+    via: ["สาทร", "อนุสาวรีย์ชัยฯ"],
+    times: ["เช้า (05:00–09:00)", "กลางวัน (09:00–16:00)", "เย็น (16:00–20:00)", "ดึก (20:00–24:00)"],
+    operator: "รถร่วม ขสมก.",
+    seatsLeft: 3,
+  },
 ];
 
 export default function Home() {
-  const [fromProvince, setFromProvince] = useState("");
-  const [toProvince, setToProvince] = useState("");
+  const [fromPlace, setFromPlace] = useState("");
+  const [toPlace, setToPlace] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [passenger, setPassenger] = useState(1);
+
+  const [submitted, setSubmitted] = useState(false); // เคยกดค้นหาหรือยัง
+  const [showAll, setShowAll] = useState(false);     // โหมดแสดงทุกสาย
 
   const timeSlots = [
-    "06:00",
-    "07:30",
-    "09:00",
-    "10:30",
-    "12:00",
-    "13:30",
-    "15:00",
-    "16:30",
-    "18:00",
-    "19:30",
-    "21:00",
+    "เช้า (05:00–09:00)",
+    "กลางวัน (09:00–16:00)",
+    "เย็น (16:00–20:00)",
+    "ดึก (20:00–24:00)",
   ];
 
+  const results = useMemo(() => {
+    if (!submitted) return [];
+    if (showAll) return BUS_LINES; // โหมดแสดงทั้งหมด
+
+    // โหมดค้นหาปกติ → กรองตามเงื่อนไข
+    return BUS_LINES.filter((b) => {
+      const matchFrom = fromPlace ? (b.from.includes(fromPlace) || b.via.includes(fromPlace)) : true;
+      const matchTo = toPlace ? (b.to.includes(toPlace) || b.via.includes(toPlace)) : true;
+      const matchTime = selectedTime ? b.times.includes(selectedTime) : true;
+      return matchFrom && matchTo && matchTime;
+    });
+  }, [submitted, showAll, fromPlace, toPlace, selectedTime]);
+
   const handleSubmit = () => {
-    if (fromProvince && toProvince && selectedTime) {
-      alert(
-        `ค้นหาเส้นทาง: ${fromProvince} → ${toProvince}\nเวลา: ${selectedTime} น.\nผู้โดยสาร: ${passenger} คน`
-      );
-    } else {
-      alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    if (!fromPlace || !toPlace) {
+      alert("กรุณาเลือกจุดเริ่มต้นและจุดปลายทาง");
+      return;
     }
+    setShowAll(false);
+    setSubmitted(true);
+  };
+
+  const handleShowAll = () => {
+    // กดแสดงทั้งหมด → เปิด submitted + โหมด showAll
+    setSubmitted(true);
+    setShowAll(true);
+  };
+
+  const handleSwap = () => {
+    setFromPlace((prevFrom) => {
+      const newFrom = toPlace;
+      setToPlace(prevFrom);
+      return newFrom;
+    });
   };
 
   return (
     <>
       <Navbar />
-      <div className="container py-5">
-        <h1
-          className="text-center mb-4"
-          style={{ textShadow: "0 2px 8px #000" }}
-        ></h1>
-        <div
-          className="bg-white rounded shadow p-4 mx-auto"
-          style={{ maxWidth: 1100 }}
-        >
-          <form>
-            <div className="row g-3 align-items-end">
-              <div className="col-md-3">
-                <label className="form-label fw-bold">จาก</label>
-                <select
-                  className="form-select"
-                  value={fromProvince}
-                  onChange={(e) => setFromProvince(e.target.value)}
-                >
-                  <option value="">เลือกจังหวัดต้นทาง</option>
-                  {provinces.map((province) => (
-                    <option key={province} value={province}>
-                      {province}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-1 text-center d-flex align-items-end justify-content-center">
-                <span className="fs-4">&#8596;</span>
-              </div>
-              <div className="col-md-3">
-                <label className="form-label fw-bold">ถึง</label>
-                <select
-                  className="form-select"
-                  value={toProvince}
-                  onChange={(e) => setToProvince(e.target.value)}
-                >
-                  <option value="">เลือกจังหวัดปลายทาง</option>
-                  {provinces.map((province) => (
-                    <option key={province} value={province}>
-                      {province}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-3">
-                <label className="form-label fw-bold">เวลาเดินทาง</label>
-                <select
-                  className="form-select"
-                  value={selectedTime}
-                  onChange={(e) => setSelectedTime(e.target.value)}
-                >
-                  <option value="">เลือกเวลา</option>
-                  {timeSlots.map((time) => (
-                    <option key={time} value={time}>
-                      {time} น.
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-2">
-                <label className="form-label fw-bold">ผู้โดยสาร</label>
-                <select
-                  className="form-select"
-                  value={passenger}
-                  onChange={(e) => setPassenger(Number(e.target.value))}
-                >
-                  {[...Array(10)].map((_, i) => (
-                    <option key={i + 1} value={i + 1}>
-                      {i + 1}
-                    </option>
-                  ))}
-                </select>
-              </div>
+
+      <div className="container py-4">
+        {/* กล่องค้นหา */}
+        <div className="bg-white border rounded p-4 mx-auto" style={{ maxWidth: 1100 }}>
+          <div className="mb-3 d-flex flex-wrap justify-content-between align-items-end gap-2">
+            <div>
+              <h5 className="mb-0">ค้นหาเส้นทางรถเมย์</h5>
+              <small className="text-secondary">เลือกจุดขึ้น–ลง และช่วงเวลา (ถ้ามี)</small>
             </div>
-            <div className="row mt-3">
-              <div className="col text-end">
-                <button
-                  type="button"
-                  className="btn btn-warning px-5 fw-bold"
-                  style={{ color: "#fff", fontSize: "1.2rem" }}
-                  onClick={handleSubmit}
-                >
-                  ค้นหา
-                </button>
-              </div>
+
+            {/* ปุ่ม "แสดงเส้นทางทั้งหมด" */}
+            <div className="text-end">
+              <button type="button" className="btn btn-outline-secondary btn-sm" onClick={handleShowAll}>
+                แสดงเส้นทางทั้งหมด
+              </button>
             </div>
-          </form>
+          </div>
+
+          <SearchForm
+            places={PLACES}
+            timeSlots={timeSlots}
+            fromPlace={fromPlace}
+            toPlace={toPlace}
+            selectedTime={selectedTime}
+            onChangeFrom={setFromPlace}
+            onChangeTo={setToPlace}
+            onChangeTime={setSelectedTime}
+            onSwap={handleSwap}
+            onSubmit={handleSubmit}
+          />
+        </div>
+
+        {/* ผลลัพธ์ */}
+        <div className="mt-4">
+          <SearchResults submitted={submitted} results={results} />
         </div>
       </div>
-      {/* Action Buttons */}
-      <div className="container my-5">
-        <div className="row justify-content-center">
-          <div className="col-md-3 text-center">
-            <div
-              className="bg-orange rounded-circle d-flex flex-column align-items-center justify-content-center mx-auto"
-              style={{ width: 120, height: 120 }}
-            >
-              <i className="bi bi-calendar fs-1 text-white"></i>
-              <div className="fw-bold text-white mt-2">เลื่อนตั๋ว</div>
-            </div>
-          </div>
-          <div className="col-md-3 text-center">
-            <div
-              className="bg-orange rounded-circle d-flex flex-column align-items-center justify-content-center mx-auto"
-              style={{ width: 120, height: 120 }}
-            >
-              <i className="bi bi-arrow-repeat fs-1 text-white"></i>
-              <div className="fw-bold text-white mt-2">คืนตั๋ว</div>
-            </div>
-          </div>
-          <div className="col-md-3 text-center">
-            <div
-              className="bg-orange rounded-circle d-flex flex-column align-items-center justify-content-center mx-auto"
-              style={{ width: 120, height: 120 }}
-            >
-              <i className="bi bi-printer fs-1 text-white"></i>
-              <div className="fw-bold text-white mt-2">พิมพ์ตั๋ว</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <style>
-        {`
-          .bg-orange {
-            background: #ff6600;
-          }
-          .cursor-pointer {
-            cursor: pointer;
-          }
-          .hover-effect:hover {
-            background: #e55a00 !important;
-            transform: scale(1.05);
-            transition: all 0.3s ease;
-          }
-        `}
-      </style>
     </>
   );
 }

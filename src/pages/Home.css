@@ -1,0 +1,11 @@
+/* Tabs */
+.bus-tabs { display: flex; gap: .5rem; }
+.bus-tabs .tab-btn { border-radius: .25rem; padding: .6rem 1rem; font-weight: 600; }
+.bus-tabs .tab-btn.active { pointer-events: none; }
+
+/* Action buttons */
+.bg-orange { background: #ff6600; }
+.hover-effect:hover { background: #e55a00 !important; transform: scale(1.05); transition: all .2s ease; }
+
+/* Search results */
+.card-trip:hover { border-color: #dc3545 !important; }
