@@ -90,7 +90,7 @@ export default function BusSeatSelection() {
     []
   );
 
-  // จองแล้ว / โควตาผู้หญิง (ตัวอย่างข้อมูล mock)
+  // จองแล้ว / โควตาผู้หญิง (mock)
   const booked = useMemo(
     () =>
       new Set(["L06", "L07", "L10", "L13", "L14", "L21", "U05", "U11", "U12"]),
@@ -109,6 +109,8 @@ export default function BusSeatSelection() {
       return next;
     });
   };
+
+  const clearAll = () => setSelected(new Set());
 
   const selectedList = useMemo(() => Array.from(selected).sort(), [selected]);
   const total = selectedList.length * pricePerSeat;
@@ -141,7 +143,7 @@ export default function BusSeatSelection() {
             </div>
 
             {/* Legend */}
-            <Legend />
+            <Legend pricePerSeat={pricePerSeat} />
 
             {/* Deck Tabs */}
             <ul className="nav nav-tabs" id="deckTabs" role="tablist">
@@ -208,19 +210,34 @@ export default function BusSeatSelection() {
           {/* RIGHT */}
           <div className="col-12 col-lg-4">
             <div className="card shadow-sm sticky-lg">
-              <div className="card-header bg-white">
-                <div className="fw-semibold">สรุปรายการ</div>
-                <div className="small text-secondary">
-                  เลือกที่นั่งแล้วชำระเงิน
+              <div className="card-header bg-white d-flex justify-content-between align-items-center">
+                <div>
+                  <div className="fw-semibold">สรุปรายการ</div>
+                  <div className="small text-secondary">
+                    เลือกที่นั่งแล้วชำระเงิน
+                  </div>
                 </div>
+                <button
+                  className="btn btn-sm btn-outline-secondary"
+                  onClick={clearAll}
+                  disabled={selectedList.length === 0}
+                >
+                  ล้างที่นั่ง
+                </button>
               </div>
+
               <div className="card-body">
                 <div className="d-flex justify-content-between">
                   <span className="text-secondary">ผู้ให้บริการ</span>
                   <span className="fw-semibold">Satnam Travels</span>
                 </div>
                 <hr />
-                <div className="mb-2 fw-semibold">ที่นั่งที่เลือก</div>
+                <div className="mb-2 fw-semibold">
+                  ที่นั่งที่เลือก{" "}
+                  <span className="text-secondary">
+                    ({selectedList.length})
+                  </span>
+                </div>
 
                 <ul className="list-group small mb-3">
                   {selectedList.length === 0 && (
@@ -244,6 +261,10 @@ export default function BusSeatSelection() {
                   ))}
                 </ul>
 
+                <div className="d-flex justify-content-between align-items-center">
+                  <span className="text-secondary">ราคาต่อที่นั่ง</span>
+                  <span>₹{pricePerSeat.toLocaleString()}</span>
+                </div>
                 <div className="d-flex justify-content-between align-items-center mt-2">
                   <span className="fw-semibold">รวม</span>
                   <span className="fs-5 fw-bold">
@@ -251,6 +272,7 @@ export default function BusSeatSelection() {
                   </span>
                 </div>
               </div>
+
               <div className="card-footer bg-white">
                 <button
                   className="btn btn-warning w-100"
