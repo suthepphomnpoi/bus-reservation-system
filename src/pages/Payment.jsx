@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Payment() {
   return (
@@ -154,6 +155,7 @@ export default function Payment() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

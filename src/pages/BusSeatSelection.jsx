@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import SeatGrid from "../components/BusSeatSelection/SeatGrid";
 import Legend from "../components/BusSeatSelection/Legend";
 import "./BusSeatSelection.css";
@@ -202,6 +203,7 @@ export default function BusSeatSelection() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
