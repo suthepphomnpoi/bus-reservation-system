@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import BusSeatSelection from "./pages/BusSeatSelection";
 import Payment from "./pages/Payment";
+import Dashboard from "./employee/Dashboard";
 
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/payments",
     element: <Payment />,
+  },
+  {
+    path: "/Dashboard",
+    element: <Dashboard />,
   },
 ]);
 
