@@ -4,7 +4,10 @@ import Logo from "../assets/images/bus.png";
 export default function Navbar() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-white shadow-sm">
+      <nav
+        className="navbar navbar-expand-lg bg-white shadow-sm sticky-top"
+        
+      >
         <div className="container">
           <Link className="navbar-brand" to="/">
             <img src={Logo} alt="Bootstrap" width="40" height="100%" />

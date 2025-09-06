@@ -1,7 +1,9 @@
 export default function SearchResults({ submitted, results }) {
-  // กรอบผลลัพธ์ให้กว้างเท่ากล่องค้นหา
   const Box = ({ children }) => (
-    <div className="bg-white border rounded p-4 mx-auto" style={{ maxWidth: 1100 }}>
+    <div
+      className="bg-white border rounded p-4 mx-auto"
+      style={{ maxWidth: 1100 }}
+    >
       {children}
     </div>
   );
@@ -10,7 +12,8 @@ export default function SearchResults({ submitted, results }) {
     return (
       <Box>
         <div className="text-center text-secondary py-5">
-          เลือกจุดขึ้นรถ–ปลายทาง แล้วกด <strong>ค้นหา</strong> หรือกด <strong>แสดงเส้นทางทั้งหมด</strong>
+          เลือกจุดขึ้นรถ–ปลายทาง แล้วกด <strong>ค้นหา</strong> หรือกด{" "}
+          <strong>แสดงเส้นทางทั้งหมด</strong>
         </div>
       </Box>
     );
@@ -36,14 +39,20 @@ export default function SearchResults({ submitted, results }) {
               <div className="row gy-2 align-items-center">
                 {/* ซ้าย: เลขสาย + From→To + ผ่าน */}
                 <div className="col-12 col-lg-6 d-flex align-items-start gap-3">
-                  <span className={`badge ${full ? "text-bg-secondary" : "text-bg-danger"} fs-6 px-3 py-2`}>
+                  <span
+                    className={`badge ${
+                      full ? "badge-secondary" : "badge-danger"
+                    } fs-6 px-3 py-2`}
+                  >
                     สาย {b.line}
                   </span>
                   <div>
                     <div className="fw-semibold">
                       {b.from} <span className="mx-1">➜</span> {b.to}
                     </div>
-                    <div className="small text-secondary">ผ่าน: {b.via.join(" • ")}</div>
+                    <div className="small text-secondary">
+                      ผ่าน: {b.via.join(" • ")}
+                    </div>
                   </div>
                 </div>
 
@@ -51,20 +60,27 @@ export default function SearchResults({ submitted, results }) {
                 <div className="col-12 col-lg-4 text-lg-center">
                   <div className="small text-secondary">ผู้ให้บริการ</div>
                   <div className="fw-semibold">{b.operator}</div>
-                  <div className="small text-secondary mt-1">ช่วงเวลาที่วิ่ง</div>
+                  <div className="small text-secondary mt-1">
+                    ช่วงเวลาที่วิ่ง
+                  </div>
                   <div className="small">{b.times.join(" / ")}</div>
                   <div className="mt-2">
                     {full ? (
-                      <span className="badge text-bg-secondary">เต็มแล้ว</span>
+                      <span className="badge badge-secondary">เต็มแล้ว</span>
                     ) : (
-                      <span className="badge text-bg-success">คงเหลือ {b.seatsLeft} ที่นั่ง</span>
+                      <span className="badge badge-success">
+                        คงเหลือ {b.seatsLeft} ที่นั่ง
+                      </span>
                     )}
                   </div>
                 </div>
 
                 {/* ขวา: ปุ่มเลือก */}
                 <div className="col-12 col-lg-2 text-lg-end">
-                  <button className="btn btn-outline-danger fw-semibold w-100" disabled={full}>
+                  <button
+                    className="btn btn-outline-danger w-100"
+                    disabled={full}
+                  >
                     เลือกสายนี้
                   </button>
                 </div>

@@ -1,3 +1,123 @@
 body {
   font-family: "Noto Sans Thai", sans-serif;
 }
+
+/* ปุ่ม primary */
+.btn-primary {
+  background: linear-gradient(135deg, #3a8dff, #6f6bff);
+  border: none;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: linear-gradient(135deg, #5aa0ff, #857cff);
+}
+
+.btn-primary:active {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Badge */
+.badge {
+  border-radius: 12px; /* โค้งมน */
+  font-size: 0.75rem; /* เล็กกระทัดรัด */
+  font-weight: 500;
+  padding: 4px 8px;
+}
+
+/* สีเฉพาะ */
+.badge-primary {
+  background: linear-gradient(135deg, #4facfe, #00f2fe); /* ฟ้าไล่ */
+  color: #000;
+}
+
+.badge-success {
+  background: linear-gradient(135deg, #34d399, #6ee7b7); /* เขียวมิ้นท์อ่อน */
+  color: #000;
+}
+
+.badge-danger {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b); /* แดง-ส้ม */
+  color: #ffffff;
+}
+
+.badge-warning {
+  background: linear-gradient(135deg, #f7971e, #ffd200); /* ส้ม-เหลือง */
+  color: #000;
+}
+
+.badge-info {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5); /* ฟ้าอมม่วง */
+  color: #000;
+}
+
+.badge-secondary {
+  background: linear-gradient(135deg, #bdc3c7, #2c3e50); /* เทา-ดำ */
+  color: #fff;
+}
+
+/* ปุ่ม Outline Danger */
+.btn-outline-danger {
+  position: relative;
+  border: 2px solid transparent;
+  color: #ff4b2b;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #e84528, #e9627d) border-box;
+  transition: all 0.3s ease;
+}
+
+/* Hover = เติมพื้นหลัง gradient + ตัวหนังสือขาว */
+.btn-outline-danger:hover,
+.btn-outline-danger:focus {
+  color: #fff;
+  background: linear-gradient(135deg, #ff4b2b, #ff6a88);
+}
+
+/* Form select */
+.form-select {
+  border: 1.5px solid #e0e6ed !important;
+}
+
+.form-select:focus {
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(100, 149, 255, 0.3) !important;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(135deg, #3a8dff, #6f6bff) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+}
+
+/* Override Text Colors */
+
+/* Primary (ฟ้า-ม่วงตามธีม) */
+.text-primary {
+  color: #3a8dff !important;
+}
+
+/* Success (เขียวมิ้นท์อ่อน) */
+.text-success {
+  color: #34d399 !important;
+}
+
+/* Danger (แดงอมส้ม soft) */
+.text-danger {
+  color: #ff6a6a !important;
+}
+
+/* Warning (ส้ม-เหลือง) */
+.text-warning {
+  color: #f7971e !important;
+}
+
+/* Info (ฟ้าอมม่วง) */
+.text-info {
+  color: #5b86e5 !important;
+}
+
+/* Secondary (เทา modern) */
+.text-secondary {
+  color: #6b7077 !important;
+}

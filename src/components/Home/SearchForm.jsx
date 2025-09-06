@@ -22,7 +22,9 @@ export default function SearchForm({
           >
             <option value="">เลือกจุดขึ้นรถ</option>
             {places.map((p) => (
-              <option key={p} value={p}>{p}</option>
+              <option key={p} value={p}>
+                {p}
+              </option>
             ))}
           </select>
         </div>
@@ -47,7 +49,9 @@ export default function SearchForm({
           >
             <option value="">เลือกจุดปลายทาง</option>
             {places.map((p) => (
-              <option key={p} value={p}>{p}</option>
+              <option key={p} value={p}>
+                {p}
+              </option>
             ))}
           </select>
         </div>
@@ -61,7 +65,9 @@ export default function SearchForm({
           >
             <option value="">ทุกช่วงเวลา</option>
             {timeSlots.map((t) => (
-              <option key={t} value={t}>{t}</option>
+              <option key={t} value={t}>
+                {t}
+              </option>
             ))}
           </select>
         </div>
@@ -69,7 +75,11 @@ export default function SearchForm({
 
       <div className="row mt-3">
         <div className="col text-end">
-          <button type="button" className="btn btn-danger px-5 fw-bold" onClick={onSubmit}>
+          <button
+            type="button"
+            className="btn btn-primary px-5 col-12 col-lg-2 d-md-inline-block"
+            onClick={onSubmit}
+          >
             ค้นหา
           </button>
         </div>

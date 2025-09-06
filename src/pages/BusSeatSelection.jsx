@@ -112,7 +112,7 @@ export default function BusSeatSelection() {
             <Legend pricePerSeat={pricePerSeat} />
 
             {/* แผนผังที่นั่ง (ชั้นเดียว) */}
-            <div className="bg-white border mt-4 rounded shadow-sm">
+            <div className="bg-white border mt-4 rounded shadow-sm p-4">
               <SeatGrid
                 seats={seats}
                 booked={booked}
@@ -193,7 +193,7 @@ export default function BusSeatSelection() {
 
               <div className="card-footer bg-white">
                 <button
-                  className="btn btn-warning w-100"
+                  className="btn btn-primary btn-lg w-100"
                   disabled={selectedList.length === 0}
                 >
                   ดำเนินการต่อ

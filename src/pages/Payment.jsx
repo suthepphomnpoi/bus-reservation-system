@@ -135,22 +135,10 @@ export default function Payment() {
                   <span>ราคารวม</span>
                   <span>฿550</span>
                 </div>
-                <button className="btn btn-dark w-100 mt-3">
+                <button className="btn btn-primary btn-lg w-100 mt-3">
                   ชำระเงิน
                 </button>
               </div>
-            </div>
-
-            {/* โค้ดส่วนลด */}
-            <div className="input-group mb-4">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="กรอกโค้ดส่วนลด"
-              />
-              <button className="btn btn-dark" type="button">
-                ใช้โค้ด
-              </button>
             </div>
           </div>
         </div>
