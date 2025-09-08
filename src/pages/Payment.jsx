@@ -1,12 +1,18 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useState } from "react";
+import "./Payment.css";
+
+import promptpayImage from '../assets/images/promptpay.png'
 
 export default function Payment() {
+  const [selectedMethod, setSelectedMethod] = useState("");
+
   return (
     <>
       <Navbar />
       <div className="container mt-4">
-        <div className="row g-4 flex-column-reverse flex-lg-row">
+        <div className="row g-4 flex-column flex-lg-row">
           {/* ฝั่งซ้าย: รายละเอียดเที่ยวรถ + วิธีชำระเงิน */}
           <div className="col-12 col-lg-8">
             {/* รายละเอียดเที่ยวรถ */}
@@ -33,79 +39,65 @@ export default function Payment() {
               </div>
             </div>
 
+            {/* คำแนะนำการเลือกวิธีชำระเงิน */}
+            <h5 className="mb-1">เลือกวิธีการชำระเงิน</h5>
+            <div className="text-muted small mb-3">แตะ/คลิกที่การ์ดเพื่อเลือก</div>
+
             {/* วิธีการชำระเงิน */}
             <div className="row mb-4">
-              {/* Paypal */}
-              <div className="col-12 col-md-4 mb-3">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span>เพย์พาล (PayPal)</span>
-                      <img
-                        src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg"
-                        alt="PayPal"
-                        style={{ height: "24px" }}
-                      />
-                    </div>
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="paymentMethod"
-                        id="paypal1"
-                      />
+              {/* PromptPay */}
+              <div className="col-12 col-md-6 mb-3">
+                <label className="payment-option w-100" aria-label="เลือกชำระเงินด้วยพร้อมเพย์ (PromptPay)">
+                  <input
+                    className="payment-option-input"
+                    type="radio"
+                    name="paymentMethod"
+                    value="promptpay"
+                    checked={selectedMethod === "promptpay"}
+                    onChange={() => setSelectedMethod("promptpay")}
+                  />
+                  <div className={`card h-100 payment-card ${selectedMethod === "promptpay" ? "selected" : ""}`}>
+                    <div className="card-body">
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span>พร้อมเพย์ (PromptPay)</span>
+                        <img
+                          src={promptpayImage}
+                          alt="PromptPay"
+                          style={{ height: "24px" }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+                </label>
               </div>
 
               {/* Mobile Banking */}
-              <div className="col-12 col-md-4 mb-3">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span>โมบายแบงก์กิ้ง</span>
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/69/69524.png"
-                        alt="Bank"
-                        style={{ height: "24px" }}
-                      />
-                    </div>
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="paymentMethod"
-                        id="mobilebanking"
-                      />
+              <div className="col-12 col-md-6 mb-3">
+                <label className="payment-option w-100" aria-label="เลือกชำระเงินด้วยโมบายแบงก์กิ้ง">
+                  <input
+                    className="payment-option-input"
+                    type="radio"
+                    name="paymentMethod"
+                    value="mobilebanking"
+                    checked={selectedMethod === "mobilebanking"}
+                    onChange={() => setSelectedMethod("mobilebanking")}
+                  />
+                  <div className={`card h-100 payment-card ${selectedMethod === "mobilebanking" ? "selected" : ""}`}>
+                    <div className="card-body">
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span>โมบายแบงก์กิ้ง</span>
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/69/69524.png"
+                          alt="Bank"
+                          style={{ height: "24px" }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+                </label>
               </div>
 
-              {/* Mastercard */}
-              <div className="col-12 col-md-4 mb-3">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span>มาสเตอร์การ์ด</span>
-                      <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png"
-                        alt="Mastercard"
-                        style={{ height: "24px" }}
-                      />
-                    </div>
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="paymentMethod"
-                        id="mastercard"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {/* ...removed Mastercard option... */}
             </div>
           </div>
 
@@ -135,7 +127,7 @@ export default function Payment() {
                   <span>ราคารวม</span>
                   <span>฿550</span>
                 </div>
-                <button className="btn btn-primary btn-lg w-100 mt-3">
+                <button className="btn btn-primary  w-100 mt-3">
                   ชำระเงิน
                 </button>
               </div>

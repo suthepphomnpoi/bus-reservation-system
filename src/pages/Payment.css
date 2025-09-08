@@ -1,0 +1,60 @@
+/* Payment page specific styles */
+
+/* Make label clickable and remove default input */
+.payment-option {
+  cursor: pointer;
+  display: block; /* ensure full width clickable */
+}
+.payment-option-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Visual selection state */
+.payment-card {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.06s ease;
+  border: 2px solid transparent;
+  position: relative;
+}
+.payment-card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.08);
+}
+.payment-card.selected {
+  border-color: #0d6efd; /* Bootstrap primary */
+  box-shadow: 0 0 0 0.25rem rgba(13,110,253,.15);
+}
+
+/* Add a subtle check icon on selected */
+.payment-card.selected::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0d6efd;
+  box-shadow: 0 0 0 2px #fff inset;
+}
+.payment-card.selected::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Keyboard focus within */
+.payment-option:focus-within .payment-card {
+  box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+/* Ensure payment section shows above summary on mobile already accomplished by layout, but keep utility here if needed */
+@media (max-width: 991.98px) {
+  /* No extra rules needed; column order handled by markup. */
+}

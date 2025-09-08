@@ -1,0 +1,2 @@
+/* Reusing existing admin sidebar styles by importing from pages/admin */
+@import '../../pages/admin/Sidebar.css';

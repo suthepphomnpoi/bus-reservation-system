@@ -4,7 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import BusSeatSelection from "./pages/BusSeatSelection";
 import Payment from "./pages/Payment";
-import Dashboard from "./employee/Dashboard";
+import Dashboard from "./pages/admin/Dashboard";
 
 
 const router = createBrowserRouter([

@@ -193,7 +193,7 @@ export default function BusSeatSelection() {
 
               <div className="card-footer bg-white">
                 <button
-                  className="btn btn-primary btn-lg w-100"
+                  className="btn btn-primary  w-100"
                   disabled={selectedList.length === 0}
                 >
                   ดำเนินการต่อ

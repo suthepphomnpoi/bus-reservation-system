@@ -1,7 +1,5 @@
-import { useMemo, useState } from "react";
-import Navbar from "../components/Navbar";
 import './Sidebar.css';
-import profileImg from '../assets/images/bus.png'; // เปลี่ยนเป็นรูปโปรไฟล์จริงถ้ามี
+import profileImg from '../../assets/images/bus.png';
 
 const menuItems = [
   { label: 'Dashboard', icon: '🧭' },
@@ -11,10 +9,8 @@ const menuItems = [
   { label: 'Assignment', icon: '📋' },
 ];
 
-export default function Sidebar({ activeIndex = 1 }) {
+export default function Sidebar({ activeIndex = 0, onItemClick }) {
   return (
-    <>
-    <Navbar />
     <div className="sidebar">
       <div className="sidebar-header">
         <div className="sidebar-logo">A</div>
@@ -26,17 +22,17 @@ export default function Sidebar({ activeIndex = 1 }) {
       </div>
       <div className="sidebar-menu">
         {menuItems.map((item, idx) => (
-          <div
+          <button
+            type="button"
             key={item.label}
             className={`sidebar-menu-item${activeIndex === idx ? ' active' : ''}`}
+            onClick={() => onItemClick?.(idx)}
           >
             <span className="sidebar-menu-icon">{item.icon}</span>
             <span>{item.label}</span>
-          </div>
+          </button>
         ))}
       </div>
     </div>
-    </>
   );
 }
-
